@@ -1,180 +1,277 @@
 <!doctype html>
 <html lang="en-GB">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CounselNote — secure counselling records for UK schools</title>
-<meta name="description" content="CounselNote is a local-first counselling record app for UK school counsellors and pastoral teams. Encrypted, offline, built around KCSIE and Working Together to Safeguard Children.">
-<link rel="stylesheet" href="styles.css">
-<style>
-  .hero{background:var(--deep);color:#fff;padding:60px 0 70px}
-  .hero h1{color:#fff;font-size:44px;line-height:1.15;max-width:680px;margin-bottom:18px}
-  .hero p{color:#d8e7e2;font-size:17px;max-width:560px;line-height:1.6;margin-bottom:26px}
-  .pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
-  .pill{font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:20px;background:#1e5a53;color:#e7f2ee}
-  .hero .ctas{display:flex;gap:14px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:13px 24px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px}
-  .btn-primary{background:var(--teal);color:#fff}
-  .btn-primary:hover{background:#0d5953}
-  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.3)}
-
-  .features{display:flex;gap:20px;margin:10px 0 10px;flex-wrap:wrap}
-  .features .card{flex:1;min-width:240px}
-  .features svg{width:34px;height:34px;margin-bottom:12px}
-  .features h3{font-size:17px;margin-bottom:6px}
-  .features p{color:var(--muted);font-size:14px;margin:0}
-
-  .measures{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-  .measures span{font-size:13px;font-weight:700;color:#1f504b;background:var(--mint);padding:8px 14px;border-radius:20px}
-
-  .pricing{display:flex;gap:20px;flex-wrap:wrap;margin:10px 0 30px}
-  .pricing .card{flex:1;min-width:230px;display:flex;flex-direction:column}
-  .pricing .tier-name{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-  .pricing .price{font:800 32px Georgia,serif;color:var(--deep);margin:0 0 10px}
-  .pricing .price small{font-size:13px;color:var(--muted);font-weight:600}
-  .pricing ul{margin:0 0 18px;padding-left:18px;color:#3a544f;font-size:13.5px;line-height:1.7;flex:1}
-  .pricing .featured{border-color:var(--teal);box-shadow:0 12px 30px rgba(18,109,101,.15)}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CounselNote — secure, local-first counselling records for UK schools">
+  <meta name="theme-color" content="#123c38">
+  <title>CounselNote</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<header class="site-header">
-  <div class="nav-wrap">
-    <a class="brand" href="index.html"><span class="mark">CN</span><strong>CounselNote</strong></a>
-    <nav class="links">
-      <a href="index.html#features">Features</a>
-      <a href="index.html#pricing">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="download.html">Download</a>
-      <a class="cta" href="checkout.html">Buy a licence</a>
-    </nav>
+  <div id="lockScreen" class="lock-screen">
+    <section class="lock-card" aria-labelledby="lockTitle">
+      <div class="brand-mark">CN</div>
+      <p class="eyebrow">LOCAL · ENCRYPTED · PRIVATE</p>
+      <h1 id="lockTitle">CounselNote</h1>
+      <p>Secure counselling records for UK schools. Stored only on this computer.</p>
+      <label>Vault passphrase
+        <input id="passphrase" type="password" autocomplete="current-password" minlength="10" placeholder="At least 10 characters">
+      </label>
+      <button id="unlockBtn" class="primary wide">Open secure vault</button>
+      <div class="restore-divider"><span>or</span></div>
+      <label class="file-button wide centred">Restore an encrypted vault<input id="lockedImportInput" type="file" accept=".json"></label>
+      <p class="fine">The passphrase is never sent anywhere and cannot be recovered. Keep a separate secure copy.</p>
+      <p id="lockError" class="error" role="alert"></p>
+    </section>
   </div>
-</header>
 
-<section class="hero">
-  <main>
-    <h1>Counselling records your DSL can trust — without a single byte leaving the school.</h1>
-    <p>CounselNote is a local-first record-keeping app built around the way UK schools actually work: structured session notes, recognised outcome measures, and a clean route to share the minimum necessary information with your Designated Safeguarding Lead.</p>
-    <div class="pills">
-      <span class="pill">AES-GCM encrypted</span>
-      <span class="pill">Nothing sent to the cloud</span>
-      <span class="pill">Built around KCSIE &amp; Working Together</span>
-    </div>
-    <div class="ctas">
-      <a class="btn btn-primary" href="download.html">Download free 30-day evaluation</a>
-      <a class="btn btn-ghost" href="checkout.html">See pricing &amp; buy</a>
-    </div>
-  </main>
-</section>
-
-<main>
-
-  <section class="section" id="features">
-    <h2 style="font-size:28px;margin-bottom:8px">Built for the session record, not adapted to it</h2>
-    <p style="color:var(--muted);max-width:640px;margin:0 0 24px">Paper files get lost. Generic note-taking apps weren't built for safeguarding. CounselNote was designed from the session record outwards.</p>
-    <div class="features">
-      <div class="card">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="11" rx="2" stroke="#126D65" stroke-width="1.6"/><path d="M7 10V7a5 5 0 0110 0v3" stroke="#126D65" stroke-width="1.6"/><circle cx="12" cy="15" r="1.4" fill="#126D65"/></svg>
-        <h3>Stays on your computer</h3>
-        <p>Every pupil record is encrypted with AES-GCM and stored locally. No account, no server, no cloud sync to worry about.</p>
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark small">CN</div>
+        <div><strong id="brandName">CounselNote</strong><span>UK school counsellor workspace</span></div>
       </div>
-      <div class="card">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="#126D65" stroke-width="1.6"/><path d="M9 3h6v2H9z" fill="#126D65"/><path d="M8 9h8M8 13h8M8 17h5" stroke="#126D65" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <h3>Built for safeguarding</h3>
-        <p>Risk levels, decision rationale and a one-click DSL summary that shares only what's necessary — never the full process notes.</p>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-button active" data-view="dashboard">Overview</button>
+        <button class="nav-button" data-view="pupils">Pupils</button>
+        <button class="nav-button" data-view="sessions">Session records</button>
+        <button class="nav-button" data-view="assessments">Outcome measures</button>
+        <button class="nav-button" data-view="reports">Reports</button>
+        <button class="nav-button" data-view="settings">Settings & safety</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="newSessionSideBtn" class="accent wide">＋ New session</button>
+        <div class="tool-grid">
+          <button id="exportBtn">Encrypted backup</button>
+          <label class="file-button">Restore backup<input id="importInput" type="file" accept=".json"></label>
+        </div>
+        <button id="lockBtn" class="lock-button wide">Lock vault</button>
       </div>
-      <div class="card">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h16" stroke="#126D65" stroke-width="1.6" stroke-linecap="round"/><rect x="7" y="12" width="2.6" height="7" fill="#126D65"/><rect x="12" y="8" width="2.6" height="11" fill="#126D65"/><rect x="17" y="5" width="2.6" height="14" fill="#126D65"/></svg>
-        <h3>Outcomes you can show</h3>
-        <p>GAD-7, PHQ-9/PHQ-A, SDQ and WEMWBS scoring with range checks, plus de-identified reports for leadership.</p>
-      </div>
-    </div>
+    </aside>
 
-    <div class="note">
-      <strong>CounselNote is a private counselling workspace, not a replacement for your school's statutory child-protection system.</strong> Safeguarding concerns are always also recorded in your school's approved system, following your school's procedure.
-    </div>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PRIVATE NOTES · SAFEGUARDING-READY SUMMARIES</p>
+          <h1 id="viewTitle">Overview</h1>
+        </div>
+        <div class="top-actions"><span id="saveStatus" class="status">Vault open</span><button id="contextAction" class="primary hidden"></button></div>
+      </header>
 
-    <h3 style="font-size:18px;margin:30px 0 10px">Recognised outcome measures</h3>
-    <div class="measures">
-      <span>GAD-7 — anxiety</span>
-      <span>PHQ-9 / PHQ-A — depression</span>
-      <span>SDQ — strengths &amp; difficulties</span>
-      <span>WEMWBS — wellbeing</span>
-    </div>
-  </section>
+      <section id="dashboardView" class="view">
+        <div class="privacy-banner"><strong>Keep therapeutic detail private.</strong> Record safeguarding concerns promptly in the school’s approved child-protection system and share only what is necessary.</div>
+        <div class="stat-grid">
+          <article class="stat"><span>Active pupils</span><strong id="statPupils">0</strong></article>
+          <article class="stat"><span>Sessions this term</span><strong id="statSessions">0</strong></article>
+          <article class="stat warning"><span>Open actions</span><strong id="statFollowups">0</strong></article>
+          <article class="stat danger-stat"><span>Safeguarding flags</span><strong id="statRisks">0</strong></article>
+        </div>
+        <div class="dashboard-grid">
+          <section class="card"><div class="card-head"><div><h2>Recent sessions</h2><p>Latest encrypted records</p></div><button class="text-button" data-go="sessions">View all</button></div><div id="recentSessions" class="timeline"></div></section>
+          <section class="card"><div class="card-head"><div><h2>Safeguarding contacts</h2><p>Configured for this school</p></div><button class="text-button" data-go="settings">Edit</button></div><div id="contactSummary" class="contact-list"></div><div class="emergency-note"><strong>Immediate danger:</strong> call 999. Childline: 0800 1111. NSPCC: 0808 800 5000.</div></section>
+        </div>
+        <section class="card">
+          <div class="card-head"><div><h2>Good-record checklist</h2><p>Aligned with UK data protection and safeguarding practice; local policy still applies</p></div></div>
+          <div class="checklist-grid">
+            <span>✓ Objective and proportionate</span><span>✓ Consent and confidentiality recorded</span>
+            <span>✓ Risk and safeguarding considered</span><span>✓ Decisions and rationale clear</span>
+            <span>✓ Actions have owners and dates</span><span>✓ The pupil’s voice is represented</span>
+          </div>
+        </section>
+      </section>
 
-  <section class="section" id="pricing">
-    <h2 style="font-size:28px;margin-bottom:8px">Pricing</h2>
-    <p style="color:var(--muted);max-width:640px;margin:0 0 24px">Prices exclude VAT. Every tier starts with a free 30-day evaluation — no card required.</p>
-    <div class="pricing">
-      <div class="card">
-        <p class="tier-name">Practitioner</p>
-        <p class="price">£149<small> /yr</small></p>
-        <ul>
-          <li>One named counsellor, one computer</li>
-          <li>Unlimited pupil codes and session records</li>
-          <li>Safeguarding prompts and DSL summary</li>
-          <li>Encrypted backup and restore</li>
-          <li>Standard email support</li>
-        </ul>
-        <a class="btn btn-primary" href="checkout.html">Buy Practitioner</a>
-      </div>
-      <div class="card featured">
-        <p class="tier-name">Professional</p>
-        <p class="price">£249<small> /yr</small></p>
-        <ul>
-          <li>Everything in Practitioner</li>
-          <li>Action-owner and deadline queue</li>
-          <li>De-identified reports and CSV export</li>
-          <li>Configurable school contacts</li>
-          <li>Priority support</li>
-        </ul>
-        <a class="btn btn-primary" href="checkout.html">Buy Professional</a>
-      </div>
-      <div class="card">
-        <p class="tier-name">School Assurance</p>
-        <p class="price">£595<small> /yr</small></p>
-        <ul>
-          <li>Everything in Professional</li>
-          <li>Five named practitioner licences</li>
-          <li>DPIA and retention-policy templates</li>
-          <li>Remote onboarding session</li>
-          <li>Annual safeguarding-configuration review</li>
-        </ul>
-        <a class="btn btn-primary" href="checkout.html">Buy School Assurance</a>
-      </div>
-    </div>
-    <p style="color:var(--muted);font-size:13.5px">Buying for a trust or local authority? <a href="mailto:sales@counselnote.uk?subject=CounselNote%20school%20quotation%20request">Request a quotation and invoice</a> instead.</p>
-  </section>
+      <section id="pupilsView" class="view hidden">
+        <div class="toolbar"><input id="pupilSearch" type="search" placeholder="Search pupil code, year group or tags"><button id="newPupilBtn" class="primary">＋ Add pupil</button></div>
+        <div id="pupilGrid" class="pupil-grid"></div>
+      </section>
 
-</main>
+      <section id="sessionsView" class="view hidden">
+        <div class="toolbar">
+          <input id="sessionSearch" type="search" placeholder="Search pupil code, theme or tags">
+          <select id="sessionFilter" aria-label="Filter sessions"><option value="all">All records</option><option value="risk">Safeguarding flagged</option><option value="followup">Open action</option></select>
+          <button id="newSessionBtn" class="primary">＋ New session</button>
+        </div>
+        <div class="split-layout"><div id="sessionList" class="record-list"></div><div id="sessionPreview" class="preview-panel"><div class="empty-state"><strong>Select a session</strong><span>Review, edit, print or prepare a DSL summary.</span></div></div></div>
+      </section>
 
-<footer class="site-footer">
-  <div class="footer-wrap">
-    <div class="col">
-      <strong style="color:#fff;display:block;margin-bottom:6px">CounselNote</strong>
-      Secure, local-first counselling records<br>for UK schools.
-    </div>
-    <div class="col">
-      <strong style="color:#fff;display:block;margin-bottom:6px">Product</strong>
-      <a href="download.html">Download</a><br>
-      <a href="checkout.html">Pricing &amp; buy</a><br>
-      <a href="faq.html">FAQ</a>
-    </div>
-    <div class="col">
-      <strong style="color:#fff;display:block;margin-bottom:6px">Contact</strong>
-      <a href="mailto:sales@counselnote.uk">sales@counselnote.uk</a><br>
-      <a href="mailto:support@counselnote.uk">support@counselnote.uk</a><br>
-      <a href="mailto:privacy@counselnote.uk">privacy@counselnote.uk</a>
-    </div>
-    <div class="col">
-      <strong style="color:#fff;display:block;margin-bottom:6px">Legal</strong>
-      <a href="privacy.html">Website privacy notice</a><br>
-      <a href="https://github.com/ukdscheon-coder/CounselNote">Source &amp; releases</a>
-    </div>
+      <section id="assessmentsView" class="view hidden">
+        <div class="info-banner"><strong>Copyright-aware:</strong> this app records totals and versions only. It does not reproduce licensed questionnaire items.</div>
+        <div class="toolbar"><select id="assessmentPupilFilter"><option value="">All pupils</option></select><button id="newAssessmentBtn" class="primary">＋ Record measure</button></div>
+        <div id="assessmentChart" class="measure-chart"></div><div id="assessmentList" class="table-wrap"></div>
+      </section>
+
+      <section id="reportsView" class="view hidden">
+        <div class="info-banner"><strong>De-identified operational reporting:</strong> therapeutic narrative is excluded and counts below three are suppressed. Review disclosure risk before sharing.</div>
+        <div class="stat-grid">
+          <article class="stat"><span>Sessions recorded</span><strong id="reportSessions">0</strong></article>
+          <article class="stat"><span>Pupils supported</span><strong id="reportPupils">0</strong></article>
+          <article class="stat warning"><span>Actions due</span><strong id="reportActions">0</strong></article>
+          <article class="stat danger-stat"><span>Safeguarding flags</span><strong id="reportSafeguarding">0</strong></article>
+        </div>
+        <div class="settings-grid">
+          <section class="card"><div class="card-head"><div><h2>Service activity</h2><p>De-identified totals by year group and theme</p></div><button id="exportReportBtn" class="primary">Export de-identified CSV</button></div><div id="serviceReport" class="report-list"></div></section>
+          <section class="card"><div class="card-head"><div><h2>Action queue</h2><p>Ownership, deadlines and resolution</p></div></div><div id="actionQueue" class="timeline"></div></section>
+        </div>
+      </section>
+
+      <section id="settingsView" class="view hidden">
+        <div class="settings-grid">
+          <form id="settingsForm" class="card">
+            <div class="card-head"><div><h2>School settings</h2><p>Stored inside the encrypted vault</p></div></div>
+            <label>Working product name<input id="settingProductName" maxlength="60" placeholder="CounselNote"></label>
+            <label>Licence key<input id="settingLicenseKey" maxlength="40" placeholder="CN-PF-XXXXXXXXXXXXXXXXXXXX-XXXXXXXX"></label>
+            <p class="fine" id="licenseStatus"></p>
+            <label>School or service name<input id="settingSchoolName" maxlength="100"></label>
+            <label>Default counsellor<input id="settingCounsellor" maxlength="80"></label>
+            <label>Designated Safeguarding Lead (DSL)<input id="settingDslName" maxlength="80"></label>
+            <label>DSL contact<input id="settingDslContact" maxlength="120"></label>
+            <label>Local authority children’s social care / MASH<input id="settingMash" maxlength="160" placeholder="Local authority telephone number or secure email"></label>
+            <label>Local CAMHS or crisis contact<input id="settingCamhs" maxlength="160"></label>
+            <label>Record-retention note<textarea id="settingRetention" rows="3" placeholder="Follow school, local authority, professional-body and insurer policy."></textarea></label>
+            <button class="primary" type="submit">Save settings</button>
+          </form>
+          <section class="card">
+            <div class="card-head"><div><h2>Security and governance</h2><p>Local-first does not remove organisational duties</p></div></div>
+            <ul class="plain-list">
+              <li>Use a managed, encrypted device and a separate operating-system account.</li>
+              <li>Back up regularly to an approved encrypted location.</li>
+              <li>Use pupil codes and collect only information necessary for the stated purpose.</li>
+              <li>Agree retention, access, subject access request and secure-destruction procedures.</li>
+              <li>Record safeguarding concerns in the school’s approved child-protection system as well.</li>
+              <li>Complete a DPIA and role-based access plan before deployment.</li>
+            </ul>
+            <div class="security-facts"><span><strong>AES-GCM</strong> record encryption</span><span><strong>PBKDF2</strong> 310,000 iterations</span><span><strong>10 minutes</strong> inactivity auto-lock</span><span><strong>No cloud</strong> and no analytics</span></div>
+          </section>
+        </div>
+      </section>
+    </main>
   </div>
-  <p class="footer-note">CounselNote stores all pupil and session data only on your own computer. CounselNote is a private counselling workspace and does not replace your school's statutory child-protection system.</p>
-</footer>
 
+  <dialog id="pupilDialog" class="large-dialog">
+    <form id="pupilForm">
+      <div class="dialog-head"><div><p class="eyebrow">PUPIL PROFILE</p><h2 id="pupilDialogTitle">Add pupil</h2></div><button type="button" class="icon-button" data-close="pupilDialog">×</button></div>
+      <input id="pupilId" type="hidden">
+      <div class="grid two">
+        <label>Pupil code <b>*</b><input id="pupilCode" required maxlength="40" placeholder="e.g. Y8-024"></label>
+        <label>Year group<input id="yearGroup" maxlength="30" placeholder="e.g. Year 8"></label>
+        <label>Date of birth or age band<input id="ageBand" maxlength="40" placeholder="Use the minimum identifier needed"></label>
+        <label>Status<select id="pupilStatus"><option value="active">Active</option><option value="waiting">Waiting</option><option value="closed">Closed</option></select></label>
+        <label>Referral date<span class="uk-date-control"><input id="referralDate" type="text" inputmode="numeric" maxlength="8" placeholder="DD-MM-YY" pattern="(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{2}" title="Enter the date in DD-MM-YY format, for example 22-06-26."><button type="button" class="calendar-button" data-date-picker="referralDatePicker" aria-label="Choose referral date">▦</button><input id="referralDatePicker" class="native-date-picker" type="date" tabindex="-1" aria-hidden="true"></span></label>
+        <label>Referral source<input id="referralSource" maxlength="100" placeholder="Self, parent/carer, pastoral, SENCO"></label>
+      </div>
+      <label>Presenting context<textarea id="pupilContext" rows="3" maxlength="2000"></textarea></label>
+      <label>Known support and key professionals<textarea id="pupilSupport" rows="3" maxlength="2000"></textarea></label>
+      <label>Parent/carer involvement and rationale<textarea id="parentInvolvement" rows="2" maxlength="2000" placeholder="Record involvement, non-involvement or review arrangements where relevant."></textarea></label>
+      <label>Profile tags<input id="pupilTags" maxlength="300" placeholder="anxiety, attendance, bereavement"></label>
+      <div class="dialog-actions"><button type="button" data-close="pupilDialog">Cancel</button><button class="primary" type="submit">Save pupil</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="sessionDialog" class="large-dialog">
+    <form id="sessionForm" novalidate>
+      <div class="dialog-head"><div><p class="eyebrow">COUNSELLING SESSION RECORD</p><h2 id="sessionDialogTitle">New session</h2></div><button type="button" class="icon-button" data-close="sessionDialog">×</button></div>
+      <input id="sessionId" type="hidden">
+      <section class="form-section">
+        <h3>1. Session details</h3>
+        <div class="grid three">
+          <label>Pupil <b>*</b><select id="sessionPupil" required><option value="">Select pupil</option></select></label>
+          <label>Date <b>*</b><span class="uk-date-control"><input id="sessionDate" type="text" inputmode="numeric" maxlength="8" placeholder="DD-MM-YY" required pattern="(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{2}"><button type="button" class="calendar-button" data-date-picker="sessionDatePicker" aria-label="Choose session date">▦</button><input id="sessionDatePicker" class="native-date-picker" type="date" tabindex="-1" aria-hidden="true"></span></label>
+          <label>Start time <b>*</b><input id="startTime" type="time" required></label>
+          <label>Duration (minutes) <b>*</b><input id="duration" type="number" min="1" max="300" value="50" required></label>
+          <label>Session number<input id="sessionNumber" type="number" min="1"></label>
+          <label>Counsellor <b>*</b><input id="counsellor" required maxlength="80"></label>
+          <label>Mode<select id="modality"><option>In person</option><option>Telephone</option><option>Video</option><option>Other</option></select></label>
+          <label>Location<input id="location" maxlength="80"></label>
+          <label>Attendance<select id="attendance"><option>Attended</option><option>Late</option><option>Ended early</option><option>Did not attend</option><option>Cancelled</option></select></label>
+        </div>
+      </section>
+      <section class="form-section">
+        <h3>2. Consent, contracting and confidentiality</h3>
+        <div class="checks">
+          <label><input id="recordConsent" type="checkbox" required> Recording and retention explained; consent or other basis confirmed <b>*</b></label>
+          <label><input id="confidentialityDiscussed" type="checkbox" required> Confidentiality and safeguarding exceptions explained <b>*</b></label>
+          <label><input id="accessRightsExplained" type="checkbox"> Access, school records and possible subject access requests explained</label>
+        </div>
+        <label>Contracting note<textarea id="consentNote" rows="2" maxlength="1500"></textarea></label>
+      </section>
+      <section class="form-section">
+        <h3>3. Session record</h3>
+        <label>Presenting issue or session aim <b>*</b><textarea id="presentingIssue" rows="2" required maxlength="3000"></textarea></label>
+        <div class="grid two">
+          <label>Objective session summary <b>*</b><textarea id="sessionSummary" rows="5" required maxlength="7000" placeholder="Separate what the pupil reported, what was observed and professional opinion."></textarea></label>
+          <label>Intervention and pupil response <b>*</b><textarea id="interventionResponse" rows="5" required maxlength="7000"></textarea></label>
+          <label>Pupil’s voice, wishes and feelings <b>*</b><textarea id="childVoice" rows="3" required maxlength="4000" placeholder="Use the pupil’s own words where helpful; avoid leading language."></textarea></label>
+          <label>Strengths and protective factors<textarea id="protectiveFactors" rows="3" maxlength="4000"></textarea></label>
+          <label>Observations or mental-state note<textarea id="observations" rows="3" maxlength="4000"></textarea></label>
+          <label>Impact on learning, attendance or school life<textarea id="educationImpact" rows="3" maxlength="4000"></textarea></label>
+        </div>
+      </section>
+      <section class="form-section risk-section">
+        <h3>4. Safety and safeguarding</h3>
+        <div class="grid two">
+          <label>Current concern level <b>*</b><select id="riskLevel" required><option value="none">No current concern reported or observed</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High or immediate action</option></select></label>
+          <fieldset><legend>Areas considered <b>*</b></legend><div class="risk-options">
+            <label><input type="checkbox" name="riskArea" value="Suicidal thoughts">Suicidal thoughts</label>
+            <label><input type="checkbox" name="riskArea" value="Self-harm">Self-harm</label>
+            <label><input type="checkbox" name="riskArea" value="Harm to others">Harm to others</label>
+            <label><input type="checkbox" name="riskArea" value="Abuse, neglect or exploitation">Abuse, neglect or exploitation</label>
+            <label><input type="checkbox" name="riskArea" value="Child-on-child abuse">Child-on-child abuse</label>
+            <label><input type="checkbox" name="riskArea" value="Online or extra-familial harm">Online or extra-familial harm</label>
+            <label><input type="checkbox" name="riskArea" value="None identified" checked>None identified</label>
+          </div></fieldset>
+        </div>
+        <label>Clear summary of concern and professional judgement <b>*</b><textarea id="riskEvidence" rows="3" required maxlength="5000"></textarea></label>
+        <div class="grid two">
+          <label>Immediate action and safety plan<textarea id="safetyAction" rows="3" maxlength="5000"></textarea></label>
+          <label>Consultation or information sharing<textarea id="disclosure" rows="3" maxlength="5000" placeholder="Who, what, when and the safeguarding or other lawful basis."></textarea></label>
+          <label>Decision and rationale <b>*</b><textarea id="decisionRationale" rows="3" required maxlength="5000" placeholder="Include reasons for sharing, not sharing, escalating or monitoring."></textarea></label>
+          <label>School safeguarding-record reference<textarea id="safeguardingReference" rows="2" maxlength="1000" placeholder="Reference only; do not duplicate unnecessary therapeutic detail."></textarea></label>
+        </div>
+        <label class="signoff"><input id="safeguardingRecorded" type="checkbox"> If a safeguarding concern exists, it has been recorded promptly in the school’s approved child-protection system.</label>
+      </section>
+      <section class="form-section">
+        <h3>5. Plan, ownership and outcome</h3>
+        <div class="grid two">
+          <label>Agreed plan and next steps <b>*</b><textarea id="nextPlan" rows="3" required maxlength="5000"></textarea></label>
+          <label>Referral or follow-up<textarea id="referralFollowup" rows="3" maxlength="5000"></textarea></label>
+          <label>Action owner<input id="actionOwner" maxlength="100" placeholder="Named role or practitioner"></label>
+          <label>Due date<span class="uk-date-control"><input id="followupDate" type="text" inputmode="numeric" maxlength="8" placeholder="DD-MM-YY" pattern="(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{2}"><button type="button" class="calendar-button" data-date-picker="followupDatePicker" aria-label="Choose due date">▦</button><input id="followupDatePicker" class="native-date-picker" type="date" tabindex="-1" aria-hidden="true"></span></label>
+          <label>Action status<select id="actionStatus"><option value="none">No open action</option><option value="open">Open</option><option value="completed">Completed</option><option value="cancelled">Cancelled with rationale</option></select></label>
+          <label>Outcome or resolution<textarea id="actionOutcome" rows="2" maxlength="3000"></textarea></label>
+          <label>Supervision or internal consultation<textarea id="supervision" rows="2" maxlength="3000"></textarea></label>
+        </div>
+        <label>Tags<input id="sessionTags" maxlength="300" placeholder="anxiety, family, exam stress"></label>
+        <label class="signoff"><input id="signedOff" type="checkbox" required> I confirm this record is accurate, proportionate and limited to what is necessary. <b>*</b></label>
+      </section>
+      <div class="dialog-actions sticky-actions"><button id="deleteSessionBtn" type="button" class="danger ghost hidden">Delete</button><span class="spacer"></span><button type="button" data-close="sessionDialog">Cancel</button><button class="primary" type="submit">Encrypt and save</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="assessmentDialog">
+    <form id="assessmentForm">
+      <div class="dialog-head"><div><p class="eyebrow">OUTCOME MEASURE</p><h2>Record total score</h2></div><button type="button" class="icon-button" data-close="assessmentDialog">×</button></div>
+      <label>Pupil <b>*</b><select id="assessmentPupil" required><option value="">Select pupil</option></select></label>
+      <label>Measure <b>*</b><select id="measure" required><option value="GAD-7">GAD-7</option><option value="PHQ-9">PHQ-9 or PHQ-A</option><option value="SDQ">SDQ</option><option value="WEMWBS">WEMWBS</option><option value="Other">Other</option></select></label>
+      <div class="grid two"><label>Date <b>*</b><span class="uk-date-control"><input id="assessmentDate" type="text" inputmode="numeric" maxlength="8" placeholder="DD-MM-YY" required pattern="(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{2}"><button type="button" class="calendar-button" data-date-picker="assessmentDatePicker" aria-label="Choose assessment date">▦</button><input id="assessmentDatePicker" class="native-date-picker" type="date" tabindex="-1" aria-hidden="true"></span></label><label>Total score <b>*</b><input id="assessmentScore" type="number" min="0" required></label></div>
+      <label>Version or respondent<input id="assessmentVersion" maxlength="100" placeholder="e.g. teacher 4–17, self-report, PHQ-A"></label>
+      <label class="signoff"><input id="assessmentSelfHarmPositive" type="checkbox"> PHQ item 9 or another self-harm or suicide response was positive.</label>
+      <label>Immediate safety assessment and action<textarea id="assessmentSafety" rows="3" placeholder="Required for any positive self-harm or suicide response."></textarea></label>
+      <label>Notes<textarea id="assessmentNotes" rows="2" maxlength="2000"></textarea></label>
+      <div id="scoreGuidance" class="score-guidance"></div>
+      <div class="dialog-actions"><button type="button" data-close="assessmentDialog">Cancel</button><button class="primary" type="submit">Save measure</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="summaryDialog" class="large-dialog">
+    <div class="dialog-head"><div><p class="eyebrow">MINIMUM NECESSARY DISCLOSURE</p><h2>DSL safeguarding summary</h2></div><button type="button" class="icon-button" data-close="summaryDialog">×</button></div>
+    <div class="info-banner">Review before sharing. This summary deliberately excludes unrelated therapeutic detail.</div>
+    <textarea id="dslSummary" rows="20"></textarea>
+    <div class="dialog-actions"><button id="downloadSummaryBtn">Download .txt</button><button id="copySummaryBtn" class="primary">Copy summary</button></div>
+  </dialog>
+
+  <dialog id="confirmDialog"><form method="dialog"><h2 id="confirmTitle">Delete this record?</h2><p id="confirmText">This cannot be undone.</p><div class="dialog-actions"><button value="cancel">Cancel</button><button value="confirm" class="danger">Delete</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
 </body>
 </html>
