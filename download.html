@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download CounselNote</title>
+<meta name="description" content="Download CounselNote — secure, local-first counselling records for UK schools.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .download-card{max-width:540px;margin:40px auto 60px;text-align:center}
+  .download-card .mark{width:56px;height:56px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;
+    border-radius:16px;background:var(--teal);color:#fff;font:800 18px Georgia,serif}
+  .download-card h1{font-size:26px;margin-bottom:8px}
+  .download-card p.sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  .download-btn{display:inline-flex;align-items:center;gap:10px;width:100%;justify-content:center;border:0;
+    border-radius:11px;padding:16px 20px;font:750 16px Arial,sans-serif;color:#fff;background:var(--teal);
+    text-decoration:none;cursor:pointer}
+  .download-btn:hover{background:#0d5953}
+  .meta{margin-top:16px;color:var(--muted);font-size:12.5px;line-height:1.7}
+  .meta code{background:var(--mint);padding:2px 5px;border-radius:5px;font-size:12px}
+  .links{margin-top:20px;display:flex;justify-content:center;gap:16px;font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="index.html"><span class="mark">CN</span><strong>CounselNote</strong></a>
+    <nav class="links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="download.html">Download</a>
+      <a class="cta" href="checkout.html">Buy a licence</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="card download-card">
+    <div class="mark">CN</div>
+    <h1>Download CounselNote</h1>
+    <p class="sub">Secure, local-first counselling records for UK schools.<br>Free 30-day evaluation — no card required.</p>
+
+    <a class="download-btn" id="downloadBtn"
+       href="https://github.com/ukdscheon-coder/CounselNote/releases/latest/download/CounselNote-Windows.zip">
+       ⬇ Download for Windows
+    </a>
+
+    <p class="meta">
+      Version <span id="versionTag">checking…</span> · Windows 10/11, 64-bit<br>
+      Unzip anywhere, then double-click <code>Launch-CounselNote.bat</code>.<br>
+      Unsigned app — Windows SmartScreen may show a warning; choose <strong>More info → Run anyway</strong>.
+    </p>
+
+    <div class="links">
+      <a href="https://github.com/ukdscheon-coder/CounselNote#readme">Read the guide</a>
+      <a href="https://github.com/ukdscheon-coder/CounselNote/releases">All versions</a>
+      <a href="checkout.html">Buy a licence</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <div class="col"><strong style="color:#fff;display:block;margin-bottom:6px">CounselNote</strong>Secure, local-first counselling records<br>for UK schools.</div>
+    <div class="col"><strong style="color:#fff;display:block;margin-bottom:6px">Contact</strong><a href="mailto:support@counselnote.uk">support@counselnote.uk</a></div>
+  </div>
+  <p class="footer-note">CounselNote stores all pupil and session data only on your own computer.</p>
+</footer>
+
+<script>
+  fetch("https://api.github.com/repos/ukdscheon-coder/CounselNote/releases/latest")
+    .then((r) => r.ok ? r.json() : null)
+    .then((data) => {
+      document.getElementById("versionTag").textContent = (data && data.tag_name) ? data.tag_name : "latest";
+    })
+    .catch(() => { document.getElementById("versionTag").textContent = "latest"; });
+</script>
+
+</body>
+</html>
