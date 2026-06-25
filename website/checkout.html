@@ -6,9 +6,6 @@
 <title>Buy CounselNote — secure counselling records for UK schools</title>
 <meta name="description" content="Buy a CounselNote licence for your UK school: Practitioner, Professional or School Assurance.">
 
-<!-- Paddle.js v2. Always load from cdn.paddle.com directly (required by Paddle). -->
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
-
 <!--
   PayPal SDK. Replace YOUR_PAYPAL_CLIENT_ID with your live client ID from
   developer.paypal.com once you've created the app there.
@@ -36,8 +33,8 @@
   .tier ul{list-style:none;margin:0 0 18px;padding:0;flex:1}
   .tier li{font-size:13px;padding:6px 0;border-bottom:1px solid #eceeea;color:#3a544f}
   .tier li:last-child{border-bottom:0}
-  .buy-paddle{width:100%;border:0;border-radius:9px;padding:12px;font-weight:750;color:#fff;background:var(--teal);cursor:pointer;margin-bottom:8px}
-  .buy-paddle:hover{background:#0d5953}
+  .buy-card{width:100%;border:0;border-radius:9px;padding:12px;font-weight:750;color:#fff;background:var(--teal);cursor:pointer;margin-bottom:8px}
+  .buy-card:hover{background:#0d5953}
   .paypal-slot{min-height:45px}
   .badge{display:inline-block;margin-bottom:10px;padding:4px 9px;border-radius:20px;background:var(--mint);color:#0d5953;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
   .school-note{margin-top:42px;padding:18px 22px;border-radius:14px;background:var(--mint);text-align:center;font-size:13px;color:#0d5953}
@@ -83,7 +80,7 @@
         <li>Outcome-measure totals (GAD-7, PHQ-9/PHQ-A, SDQ, WEMWBS)</li>
         <li>Standard email support</li>
       </ul>
-      <button class="buy-paddle" data-tier="practitioner" data-price-id="pri_REPLACE_PRACTITIONER">Buy with card</button>
+      <button class="buy-card" data-tier="practitioner">Buy with card</button>
       <div class="paypal-slot" id="paypal-practitioner"></div>
     </section>
 
@@ -100,7 +97,7 @@
         <li>Configurable school contacts and retention wording</li>
         <li>Priority support and annual update</li>
       </ul>
-      <button class="buy-paddle" data-tier="professional" data-price-id="pri_REPLACE_PROFESSIONAL">Buy with card</button>
+      <button class="buy-card" data-tier="professional">Buy with card</button>
       <div class="paypal-slot" id="paypal-professional"></div>
     </section>
 
@@ -116,7 +113,7 @@
         <li>Annual safeguarding-configuration review</li>
         <li>Procurement documentation and invoice payment</li>
       </ul>
-      <button class="buy-paddle" data-tier="school" data-price-id="pri_REPLACE_SCHOOL">Buy with card</button>
+      <button class="buy-card" data-tier="school">Buy with card</button>
       <div class="paypal-slot" id="paypal-school"></div>
     </section>
 
@@ -128,7 +125,7 @@
   </div>
 
   <p class="trust">
-    Card payments are processed by Paddle.com Market Limited, who handle VAT for you as the Merchant of Record.
+    Card payments are processed securely by Stripe.
     PayPal payments are processed by PayPal. CounselNote never receives or stores your card details.<br>
     All pupil and session data stays encrypted on your own computer — nothing is uploaded as part of a purchase.
   </p>
@@ -137,37 +134,43 @@
 <div id="status"></div>
 
 <script>
-/* ---------- Paddle ---------- */
-// TODO replace with your real client-side token from Paddle > Developer tools > Authentication.
-// Use a "test_..." token while testing in sandbox, "live_..." once you go live.
-Paddle.Environment.set("sandbox"); // remove this line when you switch to live
-Paddle.Initialize({
-  token: "REPLACE_WITH_PADDLE_CLIENT_TOKEN",
-  eventCallback: function (event) {
-    if (event.name === "checkout.completed") {
-      showStatus("ok", "Payment received — your CounselNote licence key is on its way to your email.");
-    }
-  }
-});
-
-document.querySelectorAll(".buy-paddle").forEach(function (btn) {
+/* ---------- Stripe ---------- */
+// Calls our own serverless function (api/create-checkout-session.js), which
+// creates a Stripe Checkout Session server-side and returns its URL. We then
+// redirect the browser there — Stripe hosts the actual card form.
+document.querySelectorAll(".buy-card").forEach(function (btn) {
   btn.addEventListener("click", function () {
-    var priceId = btn.dataset.priceId;
     var tier = btn.dataset.tier;
-    Paddle.Checkout.open({
-      settings: { displayMode: "overlay", variant: "one-page" },
-      items: [{ priceId: priceId, quantity: 1 }],
-      customData: { product: "counselnote", tier: tier }
-    });
+    btn.disabled = true;
+    var originalText = btn.textContent;
+    btn.textContent = "Redirecting to secure checkout…";
+    fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tier: tier })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error(data.error || "No checkout URL returned");
+        }
+      })
+      .catch(function () {
+        showStatus("err", "Couldn't start checkout. Please try again, or use PayPal below, or email sales@counselnote.uk.");
+        btn.disabled = false;
+        btn.textContent = originalText;
+      });
   });
 });
 
 /* ---------- PayPal ---------- */
-// Mirrors the Paddle price list so both buttons quote the same amount.
+// Mirrors the Stripe price list so both buttons quote the same amount.
 var PRICES_GBP = { practitioner: "149.00", professional: "249.00", school: "595.00" };
 
 ["practitioner", "professional", "school"].forEach(function (tier) {
-  if (typeof paypal === "undefined") return; // SDK blocked/ad-blocked — Paddle button still works
+  if (typeof paypal === "undefined") return; // SDK blocked/ad-blocked — card button still works
   paypal.Buttons({
     style: { layout: "horizontal", color: "white", label: "paypal", height: 45 },
     createOrder: function (data, actions) {
