@@ -100,8 +100,12 @@ async function unlock() {
     }
     cryptoKey = await deriveKey(passphrase, b64ToBytes(salt));
     const check = localStorage.getItem(META_CHECK);
-    if (check) await decryptObject(JSON.parse(check));
-    else localStorage.setItem(META_CHECK, JSON.stringify(await encryptObject({ valid: true, createdAt: new Date().toISOString() })));
+    if (check) {
+      vaultCreatedAt = (await decryptObject(JSON.parse(check))).createdAt;
+    } else {
+      vaultCreatedAt = new Date().toISOString();
+      localStorage.setItem(META_CHECK, JSON.stringify(await encryptObject({ valid: true, createdAt: vaultCreatedAt })));
+    }
     db = await openDb();
     [pupils, sessions, assessments, settings] = await Promise.all([
       readCollection("pupils", []),
@@ -117,6 +121,43 @@ async function unlock() {
   } catch {
     cryptoKey = null;
     $("lockError").textContent = "The passphrase is incorrect or this vault cannot be opened.";
+  }
+}
+
+const TRIAL_DAYS = 60;
+let vaultCreatedAt = null;
+
+function hasValidLicenceKey() {
+  return /^CN-(PR|PF|SA)-[A-Z2-7]+-[0-9A-F]{8}$/.test((settings?.licenseKey || "").trim().toUpperCase());
+}
+function trialDaysRemaining() {
+  if (!vaultCreatedAt) return TRIAL_DAYS;
+  const elapsed = (Date.now() - new Date(vaultCreatedAt).getTime()) / (1000 * 60 * 60 * 24);
+  return Math.max(0, Math.ceil(TRIAL_DAYS - elapsed));
+}
+function isTrialExpired() {
+  return !hasValidLicenceKey() && trialDaysRemaining() <= 0;
+}
+function requireActiveLicenceOrTrial() {
+  if (!isTrialExpired()) return true;
+  toast("Your 30-day evaluation has ended. Add a licence key in Settings & safety to create new pupils or session records. Existing records remain fully accessible.");
+  return false;
+}
+function renderTrialBanner() {
+  const el = $("trialBanner");
+  if (!el) return;
+  if (hasValidLicenceKey()) { el.classList.add("hidden"); return; }
+  const days = trialDaysRemaining();
+  el.classList.remove("hidden");
+  if (days > 7) {
+    el.className = "trial-banner";
+    el.textContent = `Free evaluation: ${days} days remaining. Existing records are never affected — add a licence key any time in Settings & safety.`;
+  } else if (days > 0) {
+    el.className = "trial-banner trial-banner--soon";
+    el.textContent = `${days} day${days === 1 ? "" : "s"} left in your evaluation. After this, you can still view, print and back up every record you've made — but you won't be able to open a new pupil or session until a licence key is added. Most schools sort this with a quick PO or card payment in a few minutes — see counselnote.uk/checkout.`;
+  } else {
+    el.className = "trial-banner trial-banner--expired";
+    el.textContent = "Your evaluation has ended. You can still view, print, back up and export every existing record in full. Add a licence key in Settings & safety to open new pupils or session records again.";
   }
 }
 function lockVault() {
@@ -222,6 +263,7 @@ function refreshAll() {
     ...settings
   };
   $("brandName").textContent = settings.productName;
+  renderTrialBanner();
   renderPupilOptions();
   renderDashboard();
   renderPupils();
@@ -315,6 +357,7 @@ function renderSessionPreview(id) {
     <div class="preview-actions"><button data-action="edit-session">Edit</button><button data-action="print-session">Print record</button><button data-action="dsl-summary" class="primary">Prepare DSL summary</button></div>`;
 }
 function openPupilDialog(pupil = {}) {
+  if (!pupil.id && !requireActiveLicenceOrTrial()) return;
   $("pupilForm").reset();
   $("pupilId").value = pupil.id || "";
   $("pupilCode").value = pupil.code || "";
@@ -364,6 +407,7 @@ function nextSessionNumber(pupilId) {
   return sessions.filter((s) => s.pupilId === pupilId).length + 1;
 }
 function openSessionDialog(session = {}, pupilId = "") {
+  if (!session.id && !requireActiveLicenceOrTrial()) return;
   $("sessionForm").reset();
   sessionTextFields.forEach((id) => {
     if ($(id)) $(id).value = "";
