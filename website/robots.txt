@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /checkout-success
 
 Sitemap: https://counselnote.uk/sitemap.xml
+Sitemap: https://counselnote.com/sitemap.xml
