@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /checkout-success
+
+Sitemap: https://counselnote.uk/sitemap.xml
