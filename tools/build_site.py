@@ -170,7 +170,7 @@ def build_guides():
         first_para, rest = body.split("\n\n", 1)
         others = [g for g in guides if g[0] != slug][:3]
         related = "".join(
-            f'<li><a href="{s}.html">{html.escape(m["title"])}</a></li>' for s, m, _ in others
+            f'<li><a href="/guides/{s}">{html.escape(m["title"])}</a></li>' for s, m, _ in others
         )
         ld = {
             "@context": "https://schema.org",
@@ -203,7 +203,7 @@ def build_guides():
             + nav("../")
             + f"""
 <main>
-  <p class="crumbs"><a href="../index.html">CounselNote</a> › <a href="./">Guides</a></p>
+  <p class="crumbs"><a href="../index.html">CounselNote</a> › <a href="/guides/">Guides</a></p>
   <article class="guide">
     <h1>{html.escape(meta['title'])}</h1>
     <p class="meta">By the CounselNote team · Last reviewed {REVIEWED}</p>
@@ -221,7 +221,7 @@ def build_guides():
         (out / f"{slug}.html").write_text(page, encoding="utf-8")
 
     cards = "".join(
-        f'<a class="card" href="{s}.html"><h2>{html.escape(m["title"])}</h2><p>{html.escape(m["short"])}</p></a>'
+        f'<a class="card" href="/guides/{s}"><h2>{html.escape(m["title"])}</h2><p>{html.escape(m["short"])}</p></a>'
         for s, m, _ in guides
     )
     desc = "Free practical guides for UK school counsellors and pastoral teams: session notes, record retention, confidentiality, DSL referrals, subject access requests, consent, outcome measures and UK GDPR."
