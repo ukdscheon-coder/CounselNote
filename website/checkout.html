@@ -1,16 +1,23 @@
 <!doctype html>
 <html lang="en-GB">
 <head>
+<!-- cn:head -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-91LT88R0F4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500});
+  gtag('js', new Date());
+  gtag('config', 'G-91LT88R0F4');
+</script>
+<meta name="google-adsense-account" content="ca-pub-9335333067725848">
+
+<!-- /cn:head -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Buy CounselNote — secure counselling records for UK schools</title>
 <meta name="description" content="Buy a CounselNote licence for your UK school: Practitioner, Professional or School Assurance.">
-
-<!--
-  PayPal SDK. Replace YOUR_PAYPAL_CLIENT_ID with your live client ID from
-  developer.paypal.com once you've created the app there.
--->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=GBP&intent=capture"></script>
 
 <link rel="stylesheet" href="styles.css">
 <style>
@@ -64,7 +71,7 @@
 
 <main>
   <h1>Choose a licence</h1>
-  <p class="lead">Prices exclude VAT. All tiers include the 30-day free evaluation period before you're charged — buying here issues a full licence key by email once payment completes.</p>
+  <p class="lead">Prices exclude VAT. Not sure yet? <a href="download.html">Evaluate free for 30 days</a> first — no card needed. Buying here issues a one-year licence key by email once payment completes.</p>
 
   <div class="tiers">
 
@@ -125,8 +132,7 @@
   </div>
 
   <p class="trust">
-    Card payments are processed securely by Stripe.
-    PayPal payments are processed by PayPal. CounselNote never receives or stores your card details.<br>
+    Card payments are processed securely by Stripe; PayPal payments by PayPal. CounselNote never receives or stores your card details.<br>
     All pupil and session data stays encrypted on your own computer — nothing is uploaded as part of a purchase.
   </p>
 </main>
@@ -134,67 +140,92 @@
 <div id="status"></div>
 
 <script>
-/* ---------- Stripe ---------- */
-// Calls our own serverless function (api/create-checkout-session.js), which
-// creates a Stripe Checkout Session server-side and returns its URL. We then
-// redirect the browser there — Stripe hosts the actual card form.
-document.querySelectorAll(".buy-card").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    var tier = btn.dataset.tier;
-    btn.disabled = true;
-    var originalText = btn.textContent;
-    btn.textContent = "Redirecting to secure checkout…";
-    fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tier: tier })
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error(data.error || "No checkout URL returned");
-        }
-      })
-      .catch(function () {
-        showStatus("err", "Couldn't start checkout. Please try again, or use PayPal below, or email sales@counselnote.uk.");
-        btn.disabled = false;
-        btn.textContent = originalText;
-      });
-  });
-});
-
-/* ---------- PayPal ---------- */
-// Mirrors the Stripe price list so both buttons quote the same amount.
+var TIER_LABEL = { practitioner: "Practitioner (£149/yr)", professional: "Professional (£249/yr)", school: "School Assurance (£595/yr)" };
 var PRICES_GBP = { practitioner: "149.00", professional: "249.00", school: "595.00" };
 
-["practitioner", "professional", "school"].forEach(function (tier) {
-  if (typeof paypal === "undefined") return; // SDK blocked/ad-blocked — card button still works
-  paypal.Buttons({
-    style: { layout: "horizontal", color: "white", label: "paypal", height: 45 },
-    createOrder: function (data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: PRICES_GBP[tier], currency_code: "GBP" },
-          description: "CounselNote — " + tier + " licence (1 year)",
-          custom_id: "counselnote:" + tier
-        }]
-      });
-    },
-    onApprove: function (data, actions) {
-      return actions.order.capture().then(function () {
-        // The PayPal webhook (api/paypal-webhook.js) issues and emails the
-        // licence key once PayPal confirms the capture server-side — don't
-        // trust this client-side callback alone for fulfilment.
-        showStatus("ok", "Payment received — your CounselNote licence key is on its way to your email.");
-      });
-    },
-    onError: function () {
-      showStatus("err", "PayPal couldn't complete the payment. Please try again or use Buy with card.");
-    }
-  }).render("#paypal-" + tier);
-});
+function quoteLink(tier) {
+  var subject = "CounselNote licence — " + TIER_LABEL[tier];
+  var body = "Hello,%0D%0A%0D%0AWe would like to buy CounselNote " + TIER_LABEL[tier] + ".%0D%0A%0D%0ASchool / organisation:%0D%0APurchase order number (if any):%0D%0AInvoice address:%0D%0AName of licence holder:%0D%0AEmail for the licence key:%0D%0A";
+  return "mailto:sales@counselnote.uk?subject=" + encodeURIComponent(subject) + "&body=" + body;
+}
+
+// Swap a tier's card button for an invoice / quotation request — never a dead end.
+function useQuote(btn) {
+  var tier = btn.dataset.tier;
+  var a = document.createElement("a");
+  a.className = "buy-card";
+  a.style.display = "block"; a.style.textAlign = "center"; a.style.textDecoration = "none";
+  a.href = quoteLink(tier);
+  a.textContent = "Request invoice / quote";
+  a.addEventListener("click", function () { if (window.gtag) gtag("event", "quote_request", { tier: tier }); });
+  btn.replaceWith(a);
+}
+
+function startCardCheckout(btn) {
+  var tier = btn.dataset.tier;
+  btn.disabled = true;
+  var originalText = btn.textContent;
+  btn.textContent = "Redirecting to secure checkout…";
+  if (window.gtag) gtag("event", "begin_checkout", { tier: tier, currency: "GBP", value: Number(PRICES_GBP[tier]) });
+  fetch("/api/create-checkout-session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ tier: tier })
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.url) { window.location.href = data.url; return; }
+      throw new Error(data.error || "No checkout URL returned");
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = originalText;
+      useQuote(btn);
+      showStatus("err", "Card checkout isn't available right now — use \u201cRequest invoice / quote\u201d and we'll send an invoice with the licence.");
+    });
+}
+
+function renderPayPal(clientId) {
+  var s = document.createElement("script");
+  s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&currency=GBP&intent=capture";
+  s.onload = function () {
+    ["practitioner", "professional", "school"].forEach(function (tier) {
+      paypal.Buttons({
+        style: { layout: "horizontal", color: "white", label: "paypal", height: 45 },
+        createOrder: function (data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: PRICES_GBP[tier], currency_code: "GBP" },
+              description: "CounselNote — " + tier + " licence (1 year)",
+              custom_id: "counselnote:" + tier
+            }]
+          });
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function () {
+            // api/paypal-webhook.js issues the licence key once PayPal confirms server-side.
+            showStatus("ok", "Payment received — your CounselNote licence key is on its way to your email.");
+          });
+        },
+        onError: function () {
+          showStatus("err", "PayPal couldn't complete the payment. Please try again or request an invoice.");
+        }
+      }).render("#paypal-" + tier);
+    });
+  };
+  document.head.appendChild(s);
+}
+
+fetch("/api/checkout-config")
+  .then(function (r) { return r.ok ? r.json() : { card: false, paypalClientId: null }; })
+  .catch(function () { return { card: false, paypalClientId: null }; })
+  .then(function (cfg) {
+    document.querySelectorAll(".buy-card").forEach(function (btn) {
+      if (cfg.card) btn.addEventListener("click", function () { startCardCheckout(btn); });
+      else useQuote(btn);
+    });
+    if (cfg.paypalClientId) renderPayPal(cfg.paypalClientId);
+  });
 
 function showStatus(kind, message) {
   var el = document.getElementById("status");
