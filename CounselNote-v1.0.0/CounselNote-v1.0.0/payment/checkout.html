@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buy CounselNote — secure counselling records for UK schools</title>
+<meta name="description" content="Buy a CounselNote licence for your UK school: Practitioner, Professional or School Assurance.">
+
+<!-- Paddle.js v2. Always load from cdn.paddle.com directly (required by Paddle). -->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
+<!--
+  PayPal SDK. Replace YOUR_PAYPAL_CLIENT_ID with your live client ID from
+  developer.paypal.com once you've created the app there.
+-->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=GBP&intent=capture"></script>
+
+<style>
+  :root{--ink:#173532;--muted:#6d7d79;--paper:#f5f4ef;--card:#fffefa;--line:#dce2dd;--teal:#126d65;--deep:#123c38;--mint:#dcece6;--amber:#f1c56c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif}
+  header{padding:18px 0;text-align:center}
+  header strong{font:800 22px Georgia,serif;color:var(--deep)}
+  header span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  main{max-width:1080px;margin:0 auto;padding:10px 20px 70px}
+  h1{text-align:center;font:700 32px Georgia,serif;margin:10px 0 6px}
+  .lead{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 36px}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tier{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;box-shadow:0 12px 34px rgba(22,55,51,.06)}
+  .tier.featured{border-color:var(--teal);box-shadow:0 16px 40px rgba(18,109,101,.18)}
+  .tier h2{margin:0 0 4px;font:700 20px Georgia,serif}
+  .tier .price{font:800 34px Georgia,serif;color:var(--deep);margin:10px 0 2px}
+  .tier .price small{font-size:13px;font-weight:600;color:var(--muted)}
+  .tier .blurb{color:var(--muted);font-size:12.5px;margin-bottom:14px;min-height:32px}
+  .tier ul{list-style:none;margin:0 0 18px;padding:0;flex:1}
+  .tier li{font-size:13px;padding:6px 0;border-bottom:1px solid #eceeea;color:#3a544f}
+  .tier li:last-child{border-bottom:0}
+  .buy-paddle{width:100%;border:0;border-radius:9px;padding:12px;font-weight:750;color:#fff;background:var(--teal);cursor:pointer;margin-bottom:8px}
+  .buy-paddle:hover{background:#0d5953}
+  .paypal-slot{min-height:45px}
+  .badge{display:inline-block;margin-bottom:10px;padding:4px 9px;border-radius:20px;background:var(--mint);color:#0d5953;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+  .school-note{margin-top:42px;padding:18px 22px;border-radius:14px;background:var(--mint);text-align:center;font-size:13px;color:#0d5953}
+  .school-note a{color:#0d5953;font-weight:750}
+  .trust{margin-top:30px;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.7}
+  #status{position:fixed;left:0;right:0;bottom:0;padding:13px;text-align:center;font-size:13px;display:none}
+  #status.ok{display:block;background:#dcece6;color:#0d5953}
+  #status.err{display:block;background:#f6dede;color:#7a2424}
+  @media (max-width:880px){.tiers{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <strong>CounselNote</strong>
+  <span>Secure, local-first counselling records for UK schools</span>
+</header>
+
+<main>
+  <h1>Choose a licence</h1>
+  <p class="lead">Prices exclude VAT. All tiers include the 30-day free evaluation period before you're charged — buying here issues a full licence key by email once payment completes.</p>
+
+  <div class="tiers">
+
+    <section class="tier">
+      <h2>Practitioner</h2>
+      <p class="price">£149<small> / year</small></p>
+      <p class="blurb">One named counsellor, one managed computer.</p>
+      <ul>
+        <li>Unlimited pupil codes and session records</li>
+        <li>Structured UK counselling record</li>
+        <li>Safeguarding prompts and DSL summary</li>
+        <li>Encrypted backup and restore</li>
+        <li>Outcome-measure totals (GAD-7, PHQ-9/PHQ-A, SDQ, WEMWBS)</li>
+        <li>Standard email support</li>
+      </ul>
+      <button class="buy-paddle" data-tier="practitioner" data-price-id="pri_REPLACE_PRACTITIONER">Buy with card</button>
+      <div class="paypal-slot" id="paypal-practitioner"></div>
+    </section>
+
+    <section class="tier featured">
+      <span class="badge">Most popular</span>
+      <h2>Professional</h2>
+      <p class="price">£249<small> / year</small></p>
+      <p class="blurb">Adds operational oversight and reporting.</p>
+      <ul>
+        <li>Everything in Practitioner</li>
+        <li>Action-owner and deadline queue</li>
+        <li>De-identified service reports and CSV export</li>
+        <li>Outcome trends</li>
+        <li>Configurable school contacts and retention wording</li>
+        <li>Priority support and annual update</li>
+      </ul>
+      <button class="buy-paddle" data-tier="professional" data-price-id="pri_REPLACE_PROFESSIONAL">Buy with card</button>
+      <div class="paypal-slot" id="paypal-professional"></div>
+    </section>
+
+    <section class="tier">
+      <h2>School Assurance</h2>
+      <p class="price">£595<small> / year</small></p>
+      <p class="blurb">Up to five separately encrypted installations.</p>
+      <ul>
+        <li>Everything in Professional</li>
+        <li>Five named practitioner licences</li>
+        <li>UK deployment, DPIA and retention-policy templates</li>
+        <li>Remote onboarding session</li>
+        <li>Annual safeguarding-configuration review</li>
+        <li>Procurement documentation and invoice payment</li>
+      </ul>
+      <button class="buy-paddle" data-tier="school" data-price-id="pri_REPLACE_SCHOOL">Buy with card</button>
+      <div class="paypal-slot" id="paypal-school"></div>
+    </section>
+
+  </div>
+
+  <div class="school-note">
+    Buying for a trust, academy or local authority? We can issue a quotation, purchase order and VAT invoice instead of card payment.
+    <br><a href="mailto:sales@counselnote.co.uk?subject=CounselNote%20school%20quotation%20request">Request a school quotation →</a>
+  </div>
+
+  <p class="trust">
+    Card payments are processed by Paddle.com Market Limited, who handle VAT for you as the Merchant of Record.
+    PayPal payments are processed by PayPal. CounselNote never receives or stores your card details.<br>
+    All pupil and session data stays encrypted on your own computer — nothing is uploaded as part of a purchase.
+  </p>
+</main>
+
+<div id="status"></div>
+
+<script>
+/* ---------- Paddle ---------- */
+// TODO replace with your real client-side token from Paddle > Developer tools > Authentication.
+// Use a "test_..." token while testing in sandbox, "live_..." once you go live.
+Paddle.Environment.set("sandbox"); // remove this line when you switch to live
+Paddle.Initialize({
+  token: "REPLACE_WITH_PADDLE_CLIENT_TOKEN",
+  eventCallback: function (event) {
+    if (event.name === "checkout.completed") {
+      showStatus("ok", "Payment received — your CounselNote licence key is on its way to your email.");
+    }
+  }
+});
+
+document.querySelectorAll(".buy-paddle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var priceId = btn.dataset.priceId;
+    var tier = btn.dataset.tier;
+    Paddle.Checkout.open({
+      settings: { displayMode: "overlay", variant: "one-page" },
+      items: [{ priceId: priceId, quantity: 1 }],
+      customData: { product: "counselnote", tier: tier }
+    });
+  });
+});
+
+/* ---------- PayPal ---------- */
+// Mirrors the Paddle price list so both buttons quote the same amount.
+var PRICES_GBP = { practitioner: "149.00", professional: "249.00", school: "595.00" };
+
+["practitioner", "professional", "school"].forEach(function (tier) {
+  if (typeof paypal === "undefined") return; // SDK blocked/ad-blocked — Paddle button still works
+  paypal.Buttons({
+    style: { layout: "horizontal", color: "white", label: "paypal", height: 45 },
+    createOrder: function (data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: PRICES_GBP[tier], currency_code: "GBP" },
+          description: "CounselNote — " + tier + " licence (1 year)",
+          custom_id: "counselnote:" + tier
+        }]
+      });
+    },
+    onApprove: function (data, actions) {
+      return actions.order.capture().then(function () {
+        // The PayPal webhook (api/paypal-webhook.js) issues and emails the
+        // licence key once PayPal confirms the capture server-side — don't
+        // trust this client-side callback alone for fulfilment.
+        showStatus("ok", "Payment received — your CounselNote licence key is on its way to your email.");
+      });
+    },
+    onError: function () {
+      showStatus("err", "PayPal couldn't complete the payment. Please try again or use Buy with card.");
+    }
+  }).render("#paypal-" + tier);
+});
+
+function showStatus(kind, message) {
+  var el = document.getElementById("status");
+  el.className = kind;
+  el.textContent = message;
+}
+</script>
+
+</body>
+</html>

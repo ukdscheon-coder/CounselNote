@@ -1,0 +1,45 @@
+:root{
+  --ink:#173532; --muted:#5d6e6a; --paper:#f6f4ee; --card:#fffefb;
+  --line:#dde3de; --teal:#126d65; --deep:#0f3531; --mint:#e3efe9; --amber:#e8b94a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+a{color:var(--teal)}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--deep);margin:0}
+
+.site-header{background:var(--deep);color:#fff}
+.nav-wrap{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand .mark{width:34px;height:34px;border-radius:10px;background:var(--teal);display:flex;align-items:center;
+  justify-content:center;font:800 14px Georgia,serif;color:#fff;flex:none}
+.brand strong{font:800 18px Georgia,serif}
+nav.links{display:flex;gap:22px;align-items:center}
+nav.links a{color:#cfe2dc;text-decoration:none;font-size:14px;font-weight:600}
+nav.links a:hover{color:#fff}
+nav.links a.cta{background:var(--teal);color:#fff;padding:8px 16px;border-radius:20px}
+nav.links a.cta:hover{background:#0d5953}
+
+.site-footer{background:var(--deep);color:#a9c3bd;padding:36px 24px 28px;margin-top:60px}
+.footer-wrap{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-wrap .col{font-size:13px;line-height:1.8}
+.footer-wrap a{color:#cfe2dc}
+.footer-note{max-width:1080px;margin:24px auto 0;font-size:11.5px;color:#7f9b94;border-top:1px solid #1c4a44;
+  padding-top:16px}
+
+main{max-width:1080px;margin:0 auto;padding:0 24px}
+.page-head{padding:56px 0 20px}
+.page-head h1{font-size:38px;margin-bottom:10px}
+.page-head p{color:var(--muted);font-size:16px;max-width:640px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;
+  box-shadow:0 8px 24px rgba(15,53,49,.05)}
+.section{padding:36px 0}
+.note{background:#fff7e8;border:1px solid #f1d9a0;border-radius:12px;padding:16px 20px;color:#6b4f17;
+  font-size:14px;margin:20px 0}
+
+@media (max-width:760px){
+  nav.links{gap:12px}
+  nav.links a:not(.cta){display:none}
+  .page-head h1{font-size:30px}
+}

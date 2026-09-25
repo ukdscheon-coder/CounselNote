@@ -1,0 +1,41 @@
+CounselNote — End User Licence (draft, pre-launch)
+
+This is a provisional licence summary for evaluation and pilot use. It is not
+a substitute for legal advice and should be reviewed by the purchasing
+school or trust before commercial rollout.
+
+1. Grant
+   Subject to payment of the applicable fee, the purchaser is granted a
+   non-exclusive, non-transferable licence to install and use CounselNote on
+   the number of devices stated in the relevant pricing tier, for the
+   licence period purchased.
+
+2. Data
+   CounselNote stores all pupil and session data locally, encrypted with a
+   passphrase chosen by the user. The vendor does not have access to, and
+   cannot recover, this data or the passphrase. The purchaser is responsible
+   for backups, device security and compliance with UK GDPR and the
+   school's own data protection and retention policies.
+
+3. No statutory safeguarding system
+   CounselNote is a private counselling workspace and does not replace the
+   school's approved child-protection / safeguarding recording system.
+   Safeguarding concerns must still be recorded through the school's
+   official procedure.
+
+4. Support and updates
+   Support and update entitlements are as described for the purchased
+   pricing tier in PRICING.md.
+
+5. Liability
+   CounselNote is provided "as is". To the maximum extent permitted by
+   law, the vendor's liability is limited to the fees paid for the licence
+   in the 12 months preceding the claim. Nothing in this licence limits
+   liability for death, personal injury, or fraud where such limitation is
+   not permitted by law.
+
+6. Governing law
+   This licence is governed by the law of England and Wales.
+
+Replace this draft with solicitor-reviewed terms before taking payment from
+schools or trusts.

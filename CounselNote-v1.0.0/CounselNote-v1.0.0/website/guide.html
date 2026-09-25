@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide — CounselNote</title>
+<meta name="description" content="How to install and use CounselNote: setup, screens, safeguarding workflow, backups and troubleshooting.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .layout{display:flex;gap:36px;padding:0}
+  .side-nav{width:200px;flex:none;position:sticky;top:24px;align-self:flex-start;padding-top:6px}
+  .side-nav a{display:block;padding:7px 0;color:var(--muted);font-size:13.5px;text-decoration:none;border-left:2px solid transparent;padding-left:10px}
+  .side-nav a:hover{color:var(--teal)}
+  .guide-content{flex:1;min-width:0;padding-bottom:60px}
+  .guide-content h2{font-size:22px;margin:36px 0 10px;padding-top:10px;border-top:1px solid var(--line)}
+  .guide-content h2:first-child{border-top:0;margin-top:0}
+  .guide-content h3{font-size:16px;margin:20px 0 6px}
+  .guide-content p,.guide-content li{color:#3a544f;font-size:14.5px;line-height:1.7}
+  .guide-content ol,.guide-content ul{padding-left:22px}
+  .step-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+  .step-table th,.step-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+  .step-table th{background:var(--mint);color:#1f504b;font-size:12px;text-transform:uppercase}
+  code{background:var(--mint);padding:2px 6px;border-radius:5px;font-size:13px}
+  @media (max-width:760px){.layout{flex-direction:column}.side-nav{position:static;width:auto}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="index.html"><span class="mark">CN</span><strong>CounselNote</strong></a>
+    <nav class="links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="guide.html">Guide</a>
+      <a href="faq.html">FAQ</a>
+      <a href="download.html">Download</a>
+      <a class="cta" href="checkout.html">Buy a licence</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-head">
+    <h1>Guide</h1>
+    <p>Everything needed to install, run and use CounselNote — installation, first run, the main screens, safeguarding workflow, backups, and troubleshooting.</p>
+  </div>
+
+  <div class="layout">
+    <nav class="side-nav">
+      <a href="#install">1. Installation</a>
+      <a href="#first-run">2. First run</a>
+      <a href="#screens">3. Screens</a>
+      <a href="#safeguarding">4. Safeguarding workflow</a>
+      <a href="#backup">5. Backup &amp; restore</a>
+      <a href="#licensing">6. Licensing</a>
+      <a href="#troubleshooting">7. Troubleshooting</a>
+    </nav>
+
+    <article class="guide-content">
+
+      <h2 id="install">1. Installation</h2>
+      <h3>System requirements</h3>
+      <ul>
+        <li>Windows 10 or 11, 64-bit</li>
+        <li>No internet connection required after download</li>
+        <li>A modern browser to display CounselNote (Edge or Chrome, already included with Windows)</li>
+      </ul>
+      <h3>Steps</h3>
+      <ol>
+        <li>Download <code>CounselNote-Windows.zip</code> from the <a href="download.html">download page</a>.</li>
+        <li>Right-click the zip and choose <strong>Extract All</strong>. Choose a permanent location such as <code>Documents\CounselNote</code> — don't run it from inside Downloads.</li>
+        <li>Open the extracted folder and double-click <code>Launch-CounselNote.bat</code>.</li>
+        <li>Windows may show "Windows protected your PC" — this is expected for new, unsigned software. Click <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
+        <li>A small window will open showing <code>CounselNote is running at http://127.0.0.1:8790</code>, and your browser will open automatically.</li>
+      </ol>
+      <p>Keep that small window open in the background while you use CounselNote — it can be minimised, but closing it ends your session.</p>
+
+      <h2 id="first-run">2. First run: creating your vault</h2>
+      <ol>
+        <li>On first launch, create a vault passphrase of at least 10 characters.</li>
+        <li>Choose something you'll remember reliably — there is no password reset. No copy of your passphrase is stored anywhere, including by us, so a forgotten passphrase cannot be recovered.</li>
+        <li>Write it down and store it securely and separately from the computer (a password manager, or a locked drawer).</li>
+      </ol>
+
+      <h2 id="screens">3. Screens</h2>
+      <table class="step-table">
+        <tr><th>Screen</th><th>What it's for</th></tr>
+        <tr><td>Overview</td><td>Active pupil count, sessions this term, open follow-up actions, safeguarding flags, and your configured emergency contacts.</td></tr>
+        <tr><td>Pupils</td><td>Search and open pupil profiles; each shows referral context, status, and the chronological list of sessions.</td></tr>
+        <tr><td>Session records</td><td>The core working screen: attendance, consent, presenting issue, pupil voice, intervention, risk level, decision and action ownership. "Prepare DSL summary" generates a minimum-necessary summary to share.</td></tr>
+        <tr><td>Outcome measures</td><td>Log GAD-7, PHQ-9/PHQ-A, SDQ or WEMWBS scores with range checks and general guidance.</td></tr>
+        <tr><td>Reports</td><td>De-identified totals by month, presenting issue and referral route, with CSV export.</td></tr>
+        <tr><td>Settings &amp; safety</td><td>School details, your name, licence key, and your local DSL/MASH/CAMHS contacts.</td></tr>
+      </table>
+      <p><strong>MASH and CAMHS contact details differ by local authority</strong> — CounselNote doesn't pre-fill these; enter your own local numbers in Settings before relying on the dashboard's contact card.</p>
+
+      <h2 id="safeguarding">4. Safeguarding workflow</h2>
+      <p>CounselNote is a private counselling workspace, not a replacement for your school's statutory child-protection system. When a concern arises:</p>
+      <ol>
+        <li>Select the appropriate risk level and record the evidence behind it.</li>
+        <li>Record the immediate safety action taken.</li>
+        <li>Record the decision reached and your rationale.</li>
+        <li>Use <strong>Prepare DSL summary</strong> to generate a minimum-necessary summary.</li>
+        <li>Share that summary with your DSL, and record the concern in your school's approved child-protection system without delay — CounselNote does not do this automatically.</li>
+      </ol>
+
+      <h2 id="backup">5. Backup and restore</h2>
+      <p><strong>Backup:</strong> click <em>Encrypted backup</em> in the sidebar. A single encrypted file downloads; store it somewhere secure and separate from the computer. Back up at least weekly, and always before reinstalling Windows or changing computers.</p>
+      <p><strong>Restore:</strong> on a fresh installation, choose <em>Restore an encrypted vault</em> on the lock screen, select your backup file, and enter the original passphrase that was active when it was made.</p>
+
+      <h2 id="licensing">6. Licensing</h2>
+      <p>CounselNote starts as a 30-day free evaluation. After <a href="checkout.html">purchase</a>, you'll receive a licence key by email — paste it into <strong>Settings &amp; safety → Licence key</strong>. CounselNote is offline software and doesn't check this against a server; it's a record of your purchase, not a copy-protection mechanism.</p>
+
+      <h2 id="troubleshooting">7. Troubleshooting</h2>
+      <table class="step-table">
+        <tr><th>Issue</th><th>What to do</th></tr>
+        <tr><td>"Windows protected your PC" appears</td><td>Expected for new, unsigned software. Click More info, then Run anyway.</td></tr>
+        <tr><td>The launcher window opens then closes immediately</td><td>CounselNote may already be running. End any existing <code>CounselNote.exe</code> process in Task Manager and try again. From v1.0.1, a second launch simply opens your existing session instead.</td></tr>
+        <tr><td>I forgot my passphrase</td><td>It cannot be recovered. Start a new vault and restore your most recent encrypted backup.</td></tr>
+        <tr><td>The app looks blank or broken</td><td>Make sure the small CounselNote window is still open in the background, then reopen <code>http://127.0.0.1:8790</code>.</td></tr>
+        <tr><td>Moving to a new computer</td><td>Take an encrypted backup on the old machine, install CounselNote on the new one, create a new vault, then restore the backup.</td></tr>
+      </table>
+
+      <p style="margin-top:30px;color:var(--muted);font-size:13px">Still stuck? Email <a href="mailto:support@counselnote.uk">support@counselnote.uk</a>.</p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <div class="col"><strong style="color:#fff;display:block;margin-bottom:6px">CounselNote</strong>Secure, local-first counselling records<br>for UK schools.</div>
+    <div class="col"><strong style="color:#fff;display:block;margin-bottom:6px">Contact</strong><a href="mailto:support@counselnote.uk">support@counselnote.uk</a></div>
+  </div>
+  <p class="footer-note">CounselNote stores all pupil and session data only on your own computer.</p>
+</footer>
+
+</body>
+</html>
